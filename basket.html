@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basket</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav style="margin: 1em 0;">
+    <a href="index.html" class="ButtonSort">Back to Archive</a>
+  </nav>
+  <h1>Your Basket</h1>
+  <button id="clearBasketBtn" class="ButtonSort" style="margin-bottom:1em;">Clear All</button>
+  <div class="container_cards" id="basketContainer"></div>
+  <script>
+    // --- Popup logic (copy from data.js) ---
+    function showPopup(flower) {
+      const oldPopup = document.getElementById('flower-popup');
+      if (oldPopup) oldPopup.remove();
+
+      const popup = document.createElement('div');
+      popup.id = 'flower-popup';
+      popup.style.position = 'fixed';
+      popup.style.top = 0;
+      popup.style.left = 0;
+      popup.style.width = '100vw';
+      popup.style.height = '100vh';
+      popup.style.background = 'rgba(0,0,0,0.85)';
+      popup.style.display = 'flex';
+      popup.style.alignItems = 'center';
+      popup.style.justifyContent = 'center';
+      popup.style.zIndex = 10000;
+
+      const content = document.createElement('div');
+      content.style.background = '#222';
+      content.style.color = '#fff';
+      content.style.padding = '2em';
+      content.style.borderRadius = '16px';
+      content.style.maxWidth = '90vw';
+      content.style.maxHeight = '90vh';
+      content.style.overflowY = 'auto';
+      content.style.position = 'relative';
+      content.style.boxShadow = '0 0 40px #000';
+
+      content.innerHTML = `
+        <div style="text-align:center;">
+          <img src="${flower.image}" alt="[${flower.name}]" style="max-width:200px;max-height:200px;border-radius:12px;background:#111;">
+        </div>
+        <h2 style="margin-top:1em;">${flower.name}</h2>
+        <p><em>${flower.scientific_name}</em></p>
+        <ul style="text-align:left;line-height:1.7;">
+          <li><strong>Type:</strong> ${flower.type}</li>
+          <li><strong>Region:</strong> ${flower.region}</li>
+          <li><strong>Sun/Shade:</strong> ${flower.sun_shade || '-'}</li>
+          <li><strong>Water Need:</strong> ${flower.water_need || '-'}</li>
+          <li><strong>Soil Type:</strong> ${flower.soil_type || '-'}</li>
+          <li><strong>Height:</strong> ${flower.height}</li>
+          <li><strong>Evergreen:</strong> ${flower.evergreen ? 'Yes' : 'No'}</li>
+          <li><strong>Compatible with:</strong> ${flower.compatible_with ? flower.compatible_with.join(', ') : '-'}</li>
+          <li><strong>Reference Projects:</strong> ${flower.reference_projects ? flower.reference_projects.join(', ') : '-'}</li>
+          <li><strong>Number:</strong> ${flower.number}</li>
+        </ul>
+      `;
+
+      const closeBtn = document.createElement('button');
+      closeBtn.textContent = '×';
+      closeBtn.style.position = 'absolute';
+      closeBtn.style.top = '1em';
+      closeBtn.style.right = '1em';
+      closeBtn.style.background = 'transparent';
+      closeBtn.style.color = '#fff';
+      closeBtn.style.fontSize = '2em';
+      closeBtn.style.border = 'none';
+      closeBtn.style.cursor = 'pointer';
+      closeBtn.addEventListener('click', () => popup.remove());
+      content.appendChild(closeBtn);
+
+      popup.appendChild(content);
+      document.body.appendChild(popup);
+
+      popup.addEventListener('click', e => {
+        if (e.target === popup) popup.remove();
+      });
+    }
+
+    // Load data.js first
+    const script = document.createElement('script');
+    script.src = 'data.js';
+    script.onload = showBasket;
+    document.head.appendChild(script);
+
+    function getBasketCookie() {
+      const match = document.cookie.match(/(?:^|;\s*)basket=([^;]*)/);
+      return match ? JSON.parse(decodeURIComponent(match[1])) : [];
+    }
+
+    function clearBasketCookie() {
+      document.cookie = "basket=; path=/; max-age=0";
+    }
+
+    function showBasket() {
+      // Wait for data to be loaded
+      if (typeof data === 'undefined') {
+        setTimeout(showBasket, 50);
+        return;
+      }
+      const basket = getBasketCookie();
+      const basketItems = data.filter(item => basket.includes(item.number));
+      const container = document.getElementById('basketContainer');
+      container.innerHTML = '';
+      if (basketItems.length === 0) {
+        container.innerHTML = '<p>Your basket is empty.</p>';
+        return;
+      }
+      basketItems.forEach(flower => {
+        const card = document.createElement('div');
+        card.className = 'card selected';
+        card.innerHTML = `
+          <div class="card_image_container">
+            <img class="card_image" src="${flower.image}" alt="[${flower.name}]">
+          </div>
+          <div class="card_name">
+            <strong>${flower.name}</strong><br><em>${flower.scientific_name}</em>
+          </div>
+          <div class="card_details">
+            <p>${flower.type}</p>
+            <p>${flower.region}</p>
+            <p>${flower.height}</p>
+            <p>${flower.number}</p>
+          </div>
+        `;
+        card.addEventListener('click', () => showPopup(flower));
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById('clearBasketBtn').addEventListener('click', function() {
+      clearBasketCookie();
+      showBasket();
+    });
+  </script>
+</body>
+</html>

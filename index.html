@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The floral archive</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav style="margin: 1em 0;">
+        <a href="basket.html" class="ButtonSort">Go to Basket</a>
+    </nav>
+    <div style="margin: 1em 0;">
+        <input type="text" id="searchInput" placeholder="Search plants..." style="padding:0.5em; width: 250px;">
+    </div>
+    <div class="button_container">
+        <button class="ButtonSort" id="sortByNameBtn">Sort by Name</button>
+        <button class="ButtonSort" id="sortByNumberBtn">Sort by Number</button>
+        <button class="ButtonSort" id="sortByScNameBtn">Sort by Scientific Name</button>
+    </div>
+    <div class="container_cards">
+    </div>
+    <script src="data.js"></script>
+    <script>
+      // Wait for data.js to load
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        searchInput.addEventListener('input', function() {
+          const query = this.value.trim().toLowerCase();
+          if (typeof renderCards === 'function') {
+            if (!query) {
+              renderCards(data);
+            } else {
+              renderCards(data.filter(flower =>
+                flower.name.toLowerCase().includes(query) ||
+                flower.scientific_name.toLowerCase().includes(query) ||
+                (flower.region && flower.region.toLowerCase().includes(query)) ||
+                (flower.type && flower.type.toLowerCase().includes(query))
+              ));
+            }
+          }
+        });
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+/* Variablen */
+:root {
+    --color_active: #B692B3;
+    --color: #fff;
+}
+.card {
+    text-align: center;
+    padding: 27px;
+    --corner-size: 40px;  /* Adjust size of the corner border */
+    --border-thickness: 2px; /* Adjust border thickness */
+    padding: 27px; /* Optional: gap between content and border */
+    border: var(--border-thickness) solid var(--color);
+    -webkit-mask:
+        conic-gradient(at var(--corner-size) var(--corner-size), #0000 75%, #000 0)
+        0 0/calc(100% - var(--corner-size)) calc(100% - var(--corner-size)),
+        linear-gradient(#000 0 0) content-box;
+    mask:
+        conic-gradient(at var(--corner-size) var(--corner-size), #0000 75%, #000 0)
+        0 0/calc(100% - var(--corner-size)) calc(100% - var(--corner-size)),
+        linear-gradient(#000 0 0) content-box;
+    max-width: none;      /* Remove any previous max-width */
+    width: 100%;          /* Take full grid cell */
+    margin: 0 auto;       /* Center content if needed */
+}
+.card_name {
+    line-height: 1.3;
+    margin: 20px 0;
+}
+
+.card_details p {
+    margin: 5px;
+
+}
+.card_image_container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #222;
+}
+.card_image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.container_cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    min-height: 100px; /* Ensures grid is visible even if empty */
+}
+body {
+    background: #000;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    padding: 27px;
+}
+
+.ButtonSort {
+    background: transparent;
+    color: var(--color);
+    padding: 10px 20px;
+    border: 1px solid var(--color);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.ButtonSort:hover {
+    color: #000;
+    border-color: var(--color_active);
+    background-color: var(--color_active);
+}
+.button_container {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    margin-bottom: 27px;
+}
