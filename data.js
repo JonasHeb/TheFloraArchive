@@ -1,4 +1,4 @@
-const data = [
+const data_unfiltered = [
   {
     "name": "Lavender",
     "scientific_name": "Lavandula angustifolia",
@@ -259,67 +259,121 @@ function showPopup(flower) {
 }
 
 // --- Update renderCards to allow popup on card click ---
-function renderCards(arr = data) {
-  container.innerHTML = '';
+function renderCards(arr = data_unfiltered) {
+  const existingCards = Array.from(container.children);
+  const existingCardNumbers = existingCards.map(card => parseInt(card.dataset.number, 10));
+
   arr.forEach(flower => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    if (basket.includes(flower.number)) card.classList.add('selected');
-    card.innerHTML = `
-      <div class="card_image_container">
-        <img class="card_image" src="${flower.image}" alt="[${flower.name}]">
-      </div>
-      <div class="card_name">
-        <strong>${flower.name}</strong><br><em>${flower.scientific_name}</em>
-      </div>
-      <div class="card_details">
-        <p>${flower.type}</p>
-        <p>${flower.region}</p>
-        <p>${flower.height}</p>
-        <p>${flower.number}</p>
-      </div>
-      <button class="basket-btn">${basket.includes(flower.number) ? 'Remove from Basket' : 'Add to Basket'}</button>
-    `;
-    // Basket button logic
-    card.querySelector('.basket-btn').addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (basket.includes(flower.number)) {
-        basket = basket.filter(n => n !== flower.number);
-      } else {
-        basket.push(flower.number);
-      }
-      setBasketCookie(basket);
-      renderCards(arr);
-    });
-    // Card click for popup
-    card.addEventListener('click', (e) => {
-      // Prevent popup if basket button was clicked
-      if (e.target.classList.contains('basket-btn')) return;
-      showPopup(flower);
-    });
-    container.appendChild(card);
+    const existingCardIndex = existingCardNumbers.indexOf(flower.number);
+    let card;
+
+    if (existingCardIndex !== -1) {
+      // Update existing card
+      card = existingCards[existingCardIndex];
+      card.className = 'card';
+      if (basket.includes(flower.number)) card.classList.add('selected');
+      else card.classList.remove('selected');
+      // Update the SVG button
+      const basketBtn = card.querySelector('.basket-btn');
+      basketBtn.setAttribute('aria-label', basket.includes(flower.number) ? 'Remove from Basket' : 'Add to Basket');
+      basketBtn.innerHTML = `
+        <svg id="like_button" data-name="like button" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 47.872 47.062">
+          <path id="Pfad_63" data-name="Pfad 63"
+            d="M85.515,100.822a2.093,2.093,0,0,1-1.484-.615l-5.488-5.488a2.1,2.1,0,0,1,2.968-2.968l4,4,9.491-9.49a2.1,2.1,0,0,1,2.968,2.968L87,100.207A2.093,2.093,0,0,1,85.515,100.822Z"
+            transform="translate(-64.156 -68.886)"
+            fill="${basket.includes(flower.number) ? '#B692B3' : 'none'}"
+            stroke="${basket.includes(flower.number) ? '#B692B3' : '#fff'}"
+            stroke-miterlimit="10"
+            stroke-width="2"/>
+          <rect id="Rechteck_Häkchen" data-name="Rechteck Häkchen" width="47.872" height="47.062" fill="none"/>
+        </svg>
+      `;
+      // Remove previous event listeners by replacing the button
+      const newBasketBtn = basketBtn.cloneNode(true);
+      basketBtn.parentNode.replaceChild(newBasketBtn, basketBtn);
+      newBasketBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (basket.includes(flower.number)) {
+          basket = basket.filter(n => n !== flower.number);
+        } else {
+          basket.push(flower.number);
+        }
+        setBasketCookie(basket);
+        renderCards();
+      });
+    } else {
+      // Create new card
+      card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.number = flower.number;
+      if (basket.includes(flower.number)) card.classList.add('selected');
+      card.innerHTML = `
+        <div class="card_image_container">
+          <img class="card_image" src="${flower.image}" alt="[${flower.name}]">
+        </div>
+        <div class="card_name">
+          <strong>${flower.name}</strong><br><em>${flower.scientific_name}</em>
+        </div>
+        <div class="card_details">
+          <p>${flower.type}</p>
+          <p>${flower.region}</p>
+          <p>${flower.height}</p>
+          <p>${flower.number}</p>
+        </div>
+        <button class="basket-btn" aria-label="${basket.includes(flower.number) ? 'Remove from Basket' : 'Add to Basket'}" style="background:transparent;border:none;cursor:pointer;padding:0;display:flex;justify-content:center;align-items:center;">
+          <svg id="like_button" data-name="like button" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 47.872 47.062">
+            <path id="Pfad_63" data-name="Pfad 63"
+              d="M85.515,100.822a2.093,2.093,0,0,1-1.484-.615l-5.488-5.488a2.1,2.1,0,0,1,2.968-2.968l4,4,9.491-9.49a2.1,2.1,0,0,1,2.968,2.968L87,100.207A2.093,2.093,0,0,1,85.515,100.822Z"
+              transform="translate(-64.156 -68.886)"
+              fill="${basket.includes(flower.number) ? '#B692B3' : 'none'}"
+              stroke="${basket.includes(flower.number) ? '#B692B3' : '#fff'}"
+              stroke-miterlimit="10"
+              stroke-width="2"/>
+            <rect id="Rechteck_Häkchen" data-name="Rechteck Häkchen" width="50" height="50" fill="none"/>
+          </svg>
+        </button>
+      `;
+      // Update basket button logic to work with SVG button
+      card.querySelector('.basket-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (basket.includes(flower.number)) {
+          basket = basket.filter(n => n !== flower.number);
+        } else {
+          basket.push(flower.number);
+        }
+        setBasketCookie(basket);
+        renderCards();
+      });
+      // Card click for popup
+      card.addEventListener('click', () => showPopup(flower));
+      container.appendChild(card);
+    }
+  });
+
+  // Remove cards that are no longer in the array
+  existingCards.forEach(card => {
+    if (!arr.some(flower => flower.number === parseInt(card.dataset.number, 10))) {
+      card.remove();
+    }
   });
 }
 
+// Sort by name (alphabetical order)
 document.getElementById('sortByNameBtn').addEventListener('click', () => {
-    data.sort((a, b) => a.name.localeCompare(b.name));
-    renderCards();
-  });
-  document.getElementById('sortByNumberBtn').addEventListener('click', () => {
-    data.sort((a, b) => a.number - b.number);
-    renderCards();
-  });
-  document.getElementById('sortByScNameBtn').addEventListener('click', () => {
-    data.sort((a, b) => a.scientific_name.localeCompare(b.scientific_name));
-    renderCards();
-  });
+  data_unfiltered.sort((a, b) => a.name.localeCompare(b.name));
   renderCards();
+});
 
-// --- Optional: Add some CSS for selected cards ---
-// Add this to your styles.css:
-/*
-.card.selected {
-  box-shadow: 0 0 0 4px var(--color_active);
-  border-color: var(--color_active);
-}
-*/
+// Sort by number (ascending order)
+document.getElementById('sortByNumberBtn').addEventListener('click', () => {
+  data_unfiltered.sort((a, b) => a.number - b.number);
+  renderCards();
+});
+
+// Sort by scientific name (alphabetical order)
+document.getElementById('sortByScNameBtn').addEventListener('click', () => {
+  data_unfiltered.sort((a, b) => a.scientific_name.localeCompare(b.scientific_name));
+  renderCards();
+});
+
+renderCards();

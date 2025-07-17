@@ -99,13 +99,13 @@
     }
 
     function showBasket() {
-      // Wait for data to be loaded
-      if (typeof data === 'undefined') {
+      // Wait for data_unfiltered to be loaded
+      if (typeof data_unfiltered === 'undefined') {
         setTimeout(showBasket, 50);
         return;
       }
       const basket = getBasketCookie();
-      const basketItems = data.filter(item => basket.includes(item.number));
+      const basketItems = data_unfiltered.filter(item => basket.includes(item.number));
       const container = document.getElementById('basketContainer');
       container.innerHTML = '';
       if (basketItems.length === 0) {
