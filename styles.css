@@ -19,9 +19,6 @@
         conic-gradient(at var(--corner-size) var(--corner-size), #0000 75%, #000 0)
         0 0/calc(100% - var(--corner-size)) calc(100% - var(--corner-size)),
         linear-gradient(#000 0 0) content-box;
-    max-width: none;      /* Remove any previous max-width */
-    width: 100%;          /* Take full grid cell */
-    margin: 0 auto;       /* Center content if needed */
 }
 .card_name {
     line-height: 1.3;
@@ -45,7 +42,7 @@
 }
 .container_cards {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     min-height: 100px; /* Ensures grid is visible even if empty */
 }
