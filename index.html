@@ -8,42 +8,113 @@
 </head>
 <body>
     <div class="header">
-        <nav style="margin: 1em 0;">
-            <a href="basket.html" class="ButtonSort">Go to Basket</a>
-        </nav>
-        <div style="margin: 1em 0;">
-            <input type="text" id="searchInput" placeholder="Search plants..." style="padding:0.5em; width: 250px;">
+        <div class="logo-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="415" height="67" viewBox="0 0 415 67">
+                <g id="Gruppe_117" data-name="Gruppe 117" transform="translate(-51 177.438)">
+                    <text id="Archive." transform="translate(369.5 -124.938)" fill="none" stroke="#fff" stroke-width="1.5" font-size="56" font-family="NHaasGroteskDSPro-55Rg, Neue Haas Grotesk Display Pro"><tspan x="-94.304" y="0">Archive.</tspan></text>
+                    <text id="the" transform="translate(91.5 -124.938)" fill="none" stroke="#fff" stroke-width="1.5" font-size="56" font-family="NHaasGroteskDSPro-55Rg, Neue Haas Grotesk Display Pro"><tspan x="-38.304" y="0">the</tspan></text>
+                    <text id="Flora" transform="translate(201.5 -124.938)" fill="none" stroke="#d0a6cd" stroke-width="1.5" font-size="56" font-family="NHaasGroteskDSPro-55Rg, Neue Haas Grotesk Display Pro"><tspan x="-60.452" y="0">Flora</tspan></text>
+                </g>
+            </svg>
         </div>
-        <div class="button_container">
-            <button class="ButtonSort" id="sortByNameBtn">Sort by Name</button>
-            <button class="ButtonSort" id="sortByNumberBtn">Sort by Number</button>
-            <button class="ButtonSort" id="sortByScNameBtn">Sort by Scientific Name</button>
+        <nav style="margin: 1em 0;">
+            <div class="nav-dropdown">
+                <button class="ButtonSort nav-dropbtn" tabindex="0">MY BOTANICAL GARDEN ▼</button>
+                <div class="nav-dropdown-content">
+                    <a href="basket.html">SELECTION</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button class="ButtonSort nav-dropbtn" tabindex="0">PLACING ▼</button>
+                <div class="nav-dropdown-content">
+                    <a href="placing.html">Placing Overview</a>
+                    <a href="placing-add.html">Add Placement</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button class="ButtonSort nav-dropbtn" tabindex="0">SYSTEM-TYPE ▼</button>
+                <div class="nav-dropdown-content">
+                    <a href="system-type.html">System Overview</a>
+                    <a href="system-type-add.html">Add System</a>
+                </div>
+            </div>
+        </nav>
+        <div class="header_right">
+            <div class="search_bar">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search plants...">
+            </div>
+            <div class="button_container hamburger-menu" id="hamburgerMenu">
+                <button class="hamburger-icon" id="hamburgerIcon" aria-label="Open sort menu">
+                    &#9776;
+                </button>
+                <div class="hamburger-dropdown" id="hamburgerDropdown">
+                    <button class="ButtonSort" id="sortByNameBtn">Sort by Name</button>
+                    <button class="ButtonSort" id="sortByNumberBtn">Sort by Number</button>
+                    <button class="ButtonSort" id="sortByScNameBtn">Sort by Scientific Name</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container_cards">
     </div>
     <script src="data.js"></script>
     <script>
-      // Wait for data.js to load
-      document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        if (!searchInput) return;
-        searchInput.addEventListener('input', function() {
-          const query = this.value.trim().toLowerCase();
-          if (typeof renderCards === 'function') {
-            if (!query) {
-              renderCards(data);
-            } else {
-              renderCards(data.filter(flower =>
-                flower.name.toLowerCase().includes(query) ||
-                flower.scientific_name.toLowerCase().includes(query) ||
-                (flower.region && flower.region.toLowerCase().includes(query)) ||
-                (flower.type && flower.type.toLowerCase().includes(query))
-              ));
-            }
-          }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dropdown logic
+        document.querySelectorAll('.nav-dropbtn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.nav-dropdown').forEach(drop => drop.classList.remove('open'));
+                this.parentElement.classList.toggle('open');
+            });
         });
-      });
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.nav-dropdown').forEach(drop => drop.classList.remove('open'));
+            hamburgerMenu.classList.remove('open');
+        });
+
+        // Hamburger menu logic
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const hamburgerIcon = document.getElementById('hamburgerIcon');
+        hamburgerIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            hamburgerMenu.classList.toggle('open');
+        });
+
+        // Search bar logic
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                if (typeof renderCards === 'function') {
+                    if (!query) {
+                        renderCards(data_unfiltered);
+                    } else {
+                        renderCards(data_unfiltered.filter(flower =>
+                            flower.name.toLowerCase().includes(query) ||
+                            flower.scientific_name.toLowerCase().includes(query) ||
+                            (flower.region && flower.region.toLowerCase().includes(query)) ||
+                            (flower.type && flower.type.toLowerCase().includes(query))
+                        ));
+                    }
+                }
+            });
+        }
+
+        // Sort button logic
+        document.getElementById('sortByNameBtn').onclick = function() {
+            data_unfiltered.sort((a, b) => a.name.localeCompare(b.name));
+            renderCards(data_unfiltered);
+        };
+        document.getElementById('sortByNumberBtn').onclick = function() {
+            data_unfiltered.sort((a, b) => a.number - b.number);
+            renderCards(data_unfiltered);
+        };
+        document.getElementById('sortByScNameBtn').onclick = function() {
+            data_unfiltered.sort((a, b) => a.scientific_name.localeCompare(b.scientific_name));
+            renderCards(data_unfiltered);
+        };
+    });
     </script>
 </body>
 </html>
