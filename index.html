@@ -91,10 +91,10 @@
                         renderCards(data_unfiltered);
                     } else {
                         renderCards(data_unfiltered.filter(flower =>
-                            flower.name.toLowerCase().includes(query) ||
+                            flower.common_name.toLowerCase().includes(query) ||
                             flower.scientific_name.toLowerCase().includes(query) ||
                             (flower.region && flower.region.toLowerCase().includes(query)) ||
-                            (flower.type && flower.type.toLowerCase().includes(query))
+                            (flower.Type && flower.Type.toLowerCase().includes(query))
                         ));
                     }
                 }
@@ -103,17 +103,18 @@
 
         // Sort button logic
         document.getElementById('sortByNameBtn').onclick = function() {
-            data_unfiltered.sort((a, b) => a.name.localeCompare(b.name));
+            data_unfiltered.sort((a, b) => a.common_name.localeCompare(b.common_name));
             renderCards(data_unfiltered);
         };
         document.getElementById('sortByNumberBtn').onclick = function() {
-            data_unfiltered.sort((a, b) => a.number - b.number);
+            data_unfiltered.sort((a, b) => a.Nr - b.Nr);
             renderCards(data_unfiltered);
         };
         document.getElementById('sortByScNameBtn').onclick = function() {
             data_unfiltered.sort((a, b) => a.scientific_name.localeCompare(b.scientific_name));
             renderCards(data_unfiltered);
         };
+        renderCards(data_unfiltered);
     });
     </script>
 </body>
