@@ -40,7 +40,7 @@
     width: 100%;
     aspect-ratio: 4 / 5;
     overflow: hidden;
-    background: #222;
+    position: relative;
 }
 .card_image {
     height: 100%;
@@ -75,11 +75,15 @@ body {
     border-color: var(--color_active);
     background-color: var(--color_active);
 }
+.ButtonSort.active {
+    color: #000;
+    border-color: var(--color_active);
+    background-color: var(--color_active);
+}
 .button_container {
     display: flex;
     justify-content: start;
     gap: 10px;
-    margin-bottom: 27px;
 }
 .header {
     display: flex;
@@ -231,27 +235,27 @@ body {
 .hamburger-menu.open .hamburger-dropdown {
     display: flex;
 }
+
+.filter-section {
+    margin-bottom: 1em;
+}
+
+.filter-section h4 {
+    margin: 0 0 0.5em 0;
+    color: var(--color_active);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.filter-section:last-child {
+    margin-bottom: 0;
+}
 .header_right {
     display: flex;
     align-items: right;
     justify-content: center;
     gap: 20px;
-}
-.logo {
-    font-size: 3.5em;              /* Adjust text size as needed */
-    font-weight: 700;
-    color: transparent;             /* No fill */
-    -webkit-text-stroke: 1.5px #fff; /* White outline */
-    text-stroke: 1.5px #fff;         /* For Firefox (future) */
-    outline: 1.5px solid #fff; /* Optional: outline for better visibility */
-    border: none;
-    background: none;
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    letter-spacing: 0.05em;
 }
 .logo-svg {
     display: flex;
@@ -266,4 +270,16 @@ body {
     width: 100%;
     height: auto;
     display: block;
+}
+.sort_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.card_image_nr {
+    font-size: 3em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
 }

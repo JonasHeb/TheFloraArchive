@@ -48,9 +48,60 @@
                     &#9776;
                 </button>
                 <div class="hamburger-dropdown" id="hamburgerDropdown">
-                    <button class="ButtonSort" id="sortByNameBtn">Sort by Name</button>
-                    <button class="ButtonSort" id="sortByNumberBtn">Sort by Number</button>
-                    <button class="ButtonSort" id="sortByScNameBtn">Sort by Scientific Name</button>
+                    <div class="filter-section">
+                        <h4>Sort Options</h4>
+                        <div class="sort_container">
+                            <div class="sort_options">
+                                <button class="ButtonSort" id="sortByNameBtn">Sort by Name</button>
+                                <button class="ButtonSort" id="sortByNumberBtn">Sort by Number</button>
+                                <button class="ButtonSort" id="sortByScNameBtn">Sort by Scientific Name</button>
+                            </div>
+                            <button class="ButtonSort" id="showAllBtn">Show All</button>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Plant Type</h4>
+                        <button class="ButtonSort filter-btn" data-filter="type" data-value="shrub">Shrub</button>
+                        <button class="ButtonSort filter-btn" data-filter="type" data-value="forb">Forb/Herb</button>
+                        <button class="ButtonSort filter-btn" data-filter="type" data-value="graminoid">Graminoid</button>
+                        <button class="ButtonSort filter-btn" data-filter="type" data-value="subshrub">Subshrub</button>
+                        <button class="ButtonSort filter-btn" data-filter="type" data-value="vine">Vine</button>
+                        <button class="ButtonSort filter-btn" data-filter="type" data-value="tree">Tree</button>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Water Needs</h4>
+                        <button class="ButtonSort filter-btn" data-filter="water" data-value="low">Low Water</button>
+                        <button class="ButtonSort filter-btn" data-filter="water" data-value="average">Average Water</button>
+                        <button class="ButtonSort filter-btn" data-filter="water" data-value="high">High Water</button>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Light Requirements</h4>
+                        <button class="ButtonSort filter-btn" data-filter="exposure" data-value="full sun">Full Sun</button>
+                        <button class="ButtonSort filter-btn" data-filter="exposure" data-value="partial sun">Partial Sun</button>
+                        <button class="ButtonSort filter-btn" data-filter="exposure" data-value="shade">Shade</button>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Growing System</h4>
+                        <button class="ButtonSort filter-btn" data-filter="system" data-value="intensive">Intensive</button>
+                        <button class="ButtonSort filter-btn" data-filter="system" data-value="extensive">Extensive</button>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Attracts Wildlife</h4>
+                        <button class="ButtonSort filter-btn" data-filter="attracts" data-value="bees">Attracts Bees</button>
+                        <button class="ButtonSort filter-btn" data-filter="attracts" data-value="butterflies">Attracts Butterflies</button>
+                        <button class="ButtonSort filter-btn" data-filter="attracts" data-value="hummingbirds">Attracts Hummingbirds</button>
+                        <button class="ButtonSort filter-btn" data-filter="attracts" data-value="birds">Attracts Birds</button>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Foliage Type</h4>
+                        <button class="ButtonSort filter-btn" data-filter="evergreen" data-value="evergreen">Evergreen</button>
+                        <button class="ButtonSort filter-btn" data-filter="evergreen" data-value="deciduous">Deciduous</button>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Toxicity</h4>
+                        <button class="ButtonSort filter-btn" data-filter="toxicity" data-value="not toxic">Non-Toxic</button>
+                        <button class="ButtonSort filter-btn" data-filter="toxicity" data-value="toxic">Toxic</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,7 +165,62 @@
             data_unfiltered.sort((a, b) => a.scientific_name.localeCompare(b.scientific_name));
             renderCards(data_unfiltered);
         };
+
+        // Filter button logic
+        function setActiveFilter(activeBtn) {
+            // Remove active class from all filter buttons (except sort buttons)
+            document.querySelectorAll('.filter-btn, #showAllBtn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to the clicked button
+            activeBtn.classList.add('active');
+        }
+
+        function filterPlants(filterType, filterValue) {
+            let filtered = data_unfiltered;
+            
+            if (filterType && filterValue) {
+                filtered = data_unfiltered.filter(flower => {
+                    const value = flower[getDataField(filterType)]?.toString().toLowerCase() || '';
+                    return value.includes(filterValue.toLowerCase());
+                });
+            }
+            
+            renderCards(filtered);
+        }
+
+        function getDataField(filterType) {
+            const fieldMap = {
+                'type': 'Type',
+                'water': 'Water',
+                'exposure': 'Exposure',
+                'system': 'System',
+                'attracts': 'attracts',
+                'evergreen': 'evergreen',
+                'toxicity': 'toxicity'
+            };
+            return fieldMap[filterType];
+        }
+
+        // Show All button
+        document.getElementById('showAllBtn').onclick = function() {
+            setActiveFilter(this);
+            renderCards(data_unfiltered);
+        };
+
+        // Dynamic filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.onclick = function() {
+                setActiveFilter(this);
+                const filterType = this.dataset.filter;
+                const filterValue = this.dataset.value;
+                filterPlants(filterType, filterValue);
+            };
+        });
         renderCards(data_unfiltered);
+        
+        // Set initial active filter
+        document.getElementById('showAllBtn').classList.add('active');
     });
     </script>
 </body>
