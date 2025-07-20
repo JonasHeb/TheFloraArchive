@@ -24,7 +24,7 @@ const data_unfiltered = [
   {Nr: 23, common_name: "Raspberry", scientific_name: "Rubus idaeus", drawing: "https://i.postimg.cc/9f6qkx2t/rubus-idaeus.png", mainspecies: "Rosaceae", Type: "Shrub", height: "90 cm to 120 cm", flowering_time: "may, jun", region: "Europe, Northern Asia", climate: "", Exposure: "full sun, partial sun", Water: "average", soil: "loam, sand", evergreen: "Deciduous", toxicity: "not toxic", attracts: "birds, butterflies", System: "intensive", Reference: "", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Fert%C5%91di_k%C3%A1rmin_m%C3%A1lna.JPG/1000px-Fert%C5%91di_k%C3%A1rmin_m%C3%A1lna.JPG"},
   {Nr: 24, common_name: "Bird's-foot Trefoil", scientific_name: "Lotus corniculatus", drawing: "https://i.postimg.cc/Z52WtH5w/hornklee.png", mainspecies: "Fabaceae", Type: "Forb/Herb", height: "10 cm to 30 cm", flowering_time: "may, jun, jul, aug, sep", region: "Germany, Austria", climate: "", Exposure: "full sun", Water: "average", soil: "loam, sand", evergreen: "Evergreen", toxicity: "low toxic", attracts: "bees, butterflies ", System: "extensive", Reference: "The Greenest of the Green block, Helsinki, Finland,  Warenlager der Friedrich Lütvogt GmbH & Co. KG, Wagenfeld, Germany", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/%28MHNT%29_Lotus_corniculatus_-_Plant_habit.jpg/1000px-%28MHNT%29_Lotus_corniculatus_-_Plant_habit.jpg"},
   {Nr: 25, common_name: "Rosemary", scientific_name: "Salvia rosmarinus", drawing: "https://i.postimg.cc/q7KzkKt4/rosmarin.png", mainspecies: "Lamiaceae", Type: "Subshrub", height: "90 cm to 120 cm", flowering_time: "mar, apr ", region: "Mediterranean region", climate: "8 to 12", Exposure: "full sun", Water: "low ", soil: "chalk, loam, sand", evergreen: "Evergreen", toxicity: "not toxic", attracts: "bees, butterflies, hummingbirds", System: "intensive", Reference: "Valletta Design Cluster, Malta", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Rosemary_in_bloom.JPG/1000px-Rosemary_in_bloom.JPG"},
-  {Nr: 26, common_name: "Wild Thyme", scientific_name: "Thymus serpyllum", drawing: "https://i.postimg.cc/GtqtbKWf/thymus-serpyllum.png", mainspecies: "Lamiaceae", Type: "Subshrub", height: "3 cm to 8 cm", flowering_time: "jun, jul, aug", region: "Northern Europe, Western Asia, North Africa", climate: "1 to 9", Exposure: "full sun", Water: "low", soil: "chalk, loam, sand", evergreen: "Evergreen", toxicity: "not toxic", attracts: "bees, butterflies ", System: "extensive", Reference: "DESY HALLE 36, Hamburg, Germany", image_url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Thymus_serpyllum1.jpg"},
+  {Nr: 26, common_name: "Wild Thyme", scientific_name: "Thymus serpyllum", drawing: "https://i.postimg.cc/BnW5MTrh/thymus-serpyllum.png", mainspecies: "Lamiaceae", Type: "Subshrub", height: "3 cm to 8 cm", flowering_time: "jun, jul, aug", region: "Northern Europe, Western Asia, North Africa", climate: "1 to 9", Exposure: "full sun", Water: "low", soil: "chalk, loam, sand", evergreen: "Evergreen", toxicity: "not toxic", attracts: "bees, butterflies ", System: "extensive", Reference: "DESY HALLE 36, Hamburg, Germany", image_url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Thymus_serpyllum1.jpg"},
   {Nr: 27, common_name: "Silver Grass", scientific_name: "Corynephorus canescens", drawing: "https://i.postimg.cc/W3V1rxjK/corynephorus-canescens.png", mainspecies: "Poaceae", Type: "Graminoid", height: "15 cm to 30 cm", flowering_time: "jun, jul, aug", region: "Europe, the Middle East, Northern Africa", climate: "5 to 9", Exposure: "full sun ", Water: "low ", soil: "chalk, loam, sand", evergreen: "Deciduous", toxicity: "not toxic", attracts: "butterflies ", System: "extensive", Reference: "", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Silbergras2.jpg/1000px-Silbergras2.jpg"},
   {Nr: 28, common_name: "Sticky Catchfly", scientific_name: "Silene Viscaria", drawing: "https://i.postimg.cc/Df6mynzJ/sticky-catchfly.png", mainspecies: "Caryophyllaceae", Type: "Forb/Herb", height: "30 cm to 60 cm", flowering_time: "may, jun, jul", region: "Europe, Turkey, United States", climate: "", Exposure: "full sun", Water: "average", soil: "sand", evergreen: "Evergreen", toxicity: "not toxic", attracts: "bees", System: "intensive", Reference: "The Greenest of the Green block, Helsinki, Finland", image_url: "https://upload.wikimedia.org/wikipedia/commons/5/58/Lychnis_viscaria1.jpg"},
   {Nr: 29, common_name: "White Stonecrop", scientific_name: "Sedum album", drawing: "https://i.postimg.cc/Fs6FGYN0/sedum-album.png", mainspecies: "Crassulaceae", Type: "Forb/Herb", height: "8 cm to 15 cm", flowering_time: "jun, jul, aug", region: "Europe, Siberia, Western Asia, Northern Africa", climate: "9 to 11", Exposure: "full sun", Water: "low ", soil: "chalk, loam, sand", evergreen: "Evergreen", toxicity: "low toxic", attracts: "butterflies ", System: "extensive", Reference: "DESY HALLE 36, Hamburg, Germany", image_url: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Sedum_album_03_ies.jpg"},
@@ -96,51 +96,137 @@ function showPopup(flower) {
   popup.style.left = 0;
   popup.style.width = '100vw';
   popup.style.height = '100vh';
-  popup.style.background = 'rgba(0,0,0,0.85)';
+  popup.style.background = 'rgba(0,0,0,0.9)';
   popup.style.display = 'flex';
   popup.style.alignItems = 'center';
   popup.style.justifyContent = 'center';
   popup.style.zIndex = 10000;
 
   const content = document.createElement('div');
-  content.style.background = '#222';
+  content.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';
   content.style.color = '#fff';
-  content.style.padding = '2em';
-  content.style.borderRadius = '16px';
-  content.style.maxWidth = '90vw';
-  content.style.maxHeight = '90vh';
+  content.style.padding = '3em';
+  content.style.borderRadius = '20px';
+  content.style.width = '50vw';
+  content.style.maxHeight = '85vh';
   content.style.overflowY = 'auto';
   content.style.position = 'relative';
-  content.style.boxShadow = '0 0 40px #000';
+  content.style.boxShadow = '0 20px 60px rgba(0,0,0,0.8)';
+  content.style.border = '1px solid #444';
+  content.style.display = 'grid';
+  content.style.gridTemplateColumns = '2fr 3fr';
+  content.style.gap = '5em';
 
-  content.innerHTML = `
-    <div style="text-align:center;">
-      <img src="${flower.drawing || flower.image_url}" alt="[${flower.common_name}]" style="max-width:200px;max-height:200px;border-radius:12px;background:#111;">
-    </div>
-    <h2 style="margin-top:1em;">${flower.common_name}</h2>
-    <p><em>${flower.scientific_name}</em></p>
-    <ul style="text-align:left;line-height:1.7;">
-      <li><strong>Main species:</strong> ${flower.mainspecies || '-'}</li>
-      <li><strong>Type:</strong> ${flower.Type || '-'}</li>
-      <li><strong>Height:</strong> ${flower.height || '-'}</li>
-      <li><strong>Flowering time:</strong> ${flower.flowering_time || '-'}</li>
-      <li><strong>Region:</strong> ${flower.region || '-'}</li>
-      <li><strong>Climate:</strong> ${flower.climate || '-'}</li>
-      <li><strong>Exposure:</strong> ${flower.Exposure || '-'}</li>
-      <li><strong>Water:</strong> ${flower.Water || '-'}</li>
-      <li><strong>Soil:</strong> ${flower.soil || '-'}</li>
-      <li><strong>Evergreen:</strong> ${flower.evergreen || '-'}</li>
-      <li><strong>Toxicity:</strong> ${flower.toxicity || '-'}</li>
-      <li><strong>Attracts:</strong> ${flower.attracts || '-'}</li>
-      <li><strong>System:</strong> ${flower.System || '-'}</li>
-      <li><strong>Reference:</strong> ${flower.Reference || '-'}</li>
-      <li><strong>Image URL:</strong> <a href="${flower.image_url}" target="_blank">${flower.image_url ? "Link" : "-"}</a></li>
-      <li><strong>Number:</strong> ${flower.Nr || '-'}</li>
-    </ul>
-  `;
+  // Helper function to check if a field has meaningful data
+  function hasData(value) {
+    return value && value !== '-' && value !== '' && value.toString().trim() !== '';
+  }
 
+  // Create image section
+  const imageSection = document.createElement('div');
+  imageSection.style.display = 'flex';
+  imageSection.style.flexDirection = 'column';
+  imageSection.style.gap = '1em';
+  
+  // Main drawing/illustration
+  if (hasData(flower.drawing)) {
+    const drawingImg = document.createElement('img');
+    drawingImg.src = flower.drawing;
+    drawingImg.alt = flower.common_name + ' illustration';
+    drawingImg.style.maxWidth = '100%';
+    drawingImg.style.height = 'auto';
+    drawingImg.style.borderRadius = '12px';
+    drawingImg.style.background = '#111';
+    drawingImg.style.border = '2px solid var(--color_active)';
+    imageSection.appendChild(drawingImg);
+  }
+  
+  // Photo from image_url
+  if (hasData(flower.image_url)) {
+    const photoImg = document.createElement('img');
+    photoImg.src = flower.image_url;
+    photoImg.alt = flower.common_name + ' photo';
+    photoImg.style.maxWidth = '100%';
+    photoImg.style.height = 'auto';
+    photoImg.style.borderRadius = '12px';
+    photoImg.style.background = '#111';
+    photoImg.style.border = '1px solid #555';
+    imageSection.appendChild(photoImg);
+  }
+
+  // Create info section
+  const infoSection = document.createElement('div');
+  
+  const title = document.createElement('h2');
+  title.textContent = flower.common_name;
+  title.style.margin = '0 0 0.1em 0';
+  title.style.fontSize = '2.5em';
+  title.style.color = 'var(--color_active)';
+  title.style.fontWeight = '700';
+  infoSection.appendChild(title);
+
+  const scientific = document.createElement('p');
+  scientific.innerHTML = `<em style="font-size: 1.3em; color: #ccc;">${flower.scientific_name}</em>`;
+  scientific.style.margin = '0 0 2em 0';
+  infoSection.appendChild(scientific);
+
+  // Data fields with proper labels and only show if they have data
+  const fields = [
+    { key: 'Nr', label: 'Number' },
+    { key: 'mainspecies', label: 'Family' },
+    { key: 'Type', label: 'Plant Type' },
+    { key: 'height', label: 'Height' },
+    { key: 'flowering_time', label: 'Flowering Time' },
+    { key: 'region', label: 'Native Region' },
+    { key: 'climate', label: 'Climate Zones' },
+    { key: 'Exposure', label: 'Exposure' },
+    { key: 'Water', label: 'Water Needs' },
+    { key: 'soil', label: 'Soil Type' },
+    { key: 'evergreen', label: 'Foliage Type' },
+    { key: 'toxicity', label: 'Toxicity' },
+    { key: 'attracts', label: 'Attracts Wildlife' },
+    { key: 'System', label: 'Growing System' },
+    { key: 'Reference', label: 'Reference' }
+  ];
+
+  const dataList = document.createElement('div');
+  dataList.style.lineHeight = '1.8';
+  
+  fields.forEach(field => {
+    if (hasData(flower[field.key])) {
+      const item = document.createElement('div');
+      item.style.marginBottom = '0.8em';
+      item.style.display = 'flex';
+      item.style.alignItems = 'flex-start';
+      item.style.gap = '1em';
+      
+      const label = document.createElement('strong');
+      label.textContent = field.label + ':';
+      label.style.color = 'var(--color_active)';
+      label.style.fontWeight = '600';
+      label.style.minWidth = '140px';
+      label.style.flexShrink = '0';
+      
+      const value = document.createElement('span');
+      value.textContent = flower[field.key];
+      value.style.color = '#fff';
+      value.style.flex = '1';
+
+      
+      item.appendChild(label);
+      item.appendChild(value);
+      dataList.appendChild(item);
+    }
+  });
+  
+  infoSection.appendChild(dataList);
+
+  content.appendChild(imageSection);
+  content.appendChild(infoSection);
+
+  // Close button
   const closeBtn = document.createElement('button');
-  closeBtn.textContent = '×';
+  closeBtn.innerHTML = '×';
   closeBtn.style.position = 'absolute';
   closeBtn.style.top = '1em';
   closeBtn.style.right = '1em';
@@ -149,6 +235,8 @@ function showPopup(flower) {
   closeBtn.style.fontSize = '2em';
   closeBtn.style.border = 'none';
   closeBtn.style.cursor = 'pointer';
+  closeBtn.style.fontWeight = 'normal';
+  closeBtn.style.lineHeight = '1';
   closeBtn.addEventListener('click', () => popup.remove());
   content.appendChild(closeBtn);
 
@@ -158,6 +246,13 @@ function showPopup(flower) {
   popup.addEventListener('click', e => {
     if (e.target === popup) popup.remove();
   });
+
+  // Add responsive design
+  if (window.innerWidth <= 768) {
+    content.style.width = '95vw';
+    content.style.gridTemplateColumns = '1fr';
+    content.style.padding = '2em';
+  }
 }
 
 // --- Card rendering logic (for both archive and basket views) ---
