@@ -264,6 +264,11 @@ function renderCards(arr = data_unfiltered, container = document.querySelector('
     const flowerNr = String(flower.Nr);
     const inBasket = basket.includes(flowerNr);
 
+    // Helper function to handle empty values
+    const displayValue = (value) => {
+      return (value && value.trim() !== '') ? value : '—';
+    };
+
     const card = document.createElement('div');
     card.className = 'card' + (inBasket ? ' selected' : '');
     card.dataset.number = flowerNr;
@@ -277,10 +282,10 @@ function renderCards(arr = data_unfiltered, container = document.querySelector('
         <strong>${flower.common_name}</strong><br><em>${flower.scientific_name}</em>
       </div>
       <div class="card_details">
-        <p>${flower.Type}</p>
-        <p>${flower.height}</p>
-        <p>${flower.region}</p>
-        <p>${flower.Exposure}</p>
+        <p>${displayValue(flower.Type)}</p>
+        <p>${displayValue(flower.height)}</p>
+        <p>${displayValue(flower.region)}</p>
+        <p>${displayValue(flower.Exposure)}</p>
       </div>
       ${basketMode ? '' : `
       <button class="basket-btn" aria-label="${inBasket ? 'Remove from Basket' : 'Add to Basket'}">
