@@ -214,13 +214,36 @@ body {
     color: #fff;
     padding: 12px 16px;
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     transition: background 0.2s;
+}
+
+.nav-dropdown-content a svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
 
 .nav-dropdown-content a:hover {
     background: var(--color_active);
     color: #000;
+}
+
+.nav-dropdown-content a:hover svg path {
+    fill: #000;
+}
+
+/* Prevent text wrapping in navigation items */
+.nav-dropdown-content a {
+    white-space: nowrap;
+}
+
+.roof_specification {
+    font-size: 0.8em;
+    color: #ccc;
+    white-space: nowrap;
 }
 
 .hamburger-menu {
@@ -317,9 +340,9 @@ body {
     justify-content: space-between;
 }
 .card_image_nr {
-    font-size: 3em;
+    font-size: 2.5em;
     position: absolute;
-    top: -10px;
+    top: -8px;
     left: 0;
     z-index: 100;
 }
