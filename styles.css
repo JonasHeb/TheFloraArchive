@@ -207,7 +207,8 @@ body {
 
 /* Show dropdown only when .nav-dropdown has .open class */
 .nav-dropdown.open .nav-dropdown-content {
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .nav-dropdown-content a {
